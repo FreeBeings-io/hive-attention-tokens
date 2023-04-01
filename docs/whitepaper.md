@@ -285,6 +285,14 @@ Formula Description:
 - calculate the percentage of the rewards pool to be distributed to the user, revenue share is:
     - the reward impact as a fraction of the total reward impact of all other active users
 
+Illustrative Formula:
+
+*This is an illustrative formula, not the actual formula used in the implementation.*
+
+```
+revenue_share = (reward_impact / total_reward_impact) * rewards_pool
+```
+
 ## Sybil Attack Mitigation
 
 We propose the optional use of verified account operations, to add the account to a list of human verified accounts in line with the policies of the dApp itself. This could be done by the control account of the token itself or by accounts delegated by the control account to onboard users.
