@@ -5,7 +5,7 @@
 
 Hive Attention Tokens is a proposed layer 2 token protocol for the Hive blockchain, to allow dApps to create their own tokens and monetize their platforms using the Hive blockchain.
 
-It is designed to utilize the Hive Application Framework to maintain state.
+It is designed to utilize the Hive Application Framework to maintain state currently, but will ultimately be ported to a native Hive smart contract when the Hive blockchain supports smart contracts.
 
 When creating a new token, there are a number of properties that you can set to determine how your token comes into existence and how it will behave over time.
 
