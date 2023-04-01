@@ -27,11 +27,13 @@ Tokens will have a fixed supply and the whole supply is defined at creation and 
 
 Properties to set:
 
-- initial_supply: the number of tokens that will be created
+- `initial_supply`: the number of tokens that will be created
 
-- control_account: usually the same as the account that creates the token, but can be another account.
+- `control_account`: usually the same as the account that creates the token, but can be another account.
 
-- initial_distribution: the Hive accounts to which tokens are to be sent at creation, useful for airdrops. As an example, a content creator can allocate all distribution to their own account, for use as an NFT for accessing special content.
+- `initial_distribution`: the Hive accounts to which tokens are to be sent at creation, useful for airdrops. As an example, a content creator can allocate all distribution to their own account, for use as an NFT for accessing special content.
+
+- `effective_operations`: the operations that will be considered valid for use in the HAT algorithms, for example a `custom_json` operation with a specific `id` and `json` payload
 
 ---
 
@@ -48,14 +50,21 @@ To control the initial distribution, token creators have the option to allocate 
 
 Properties to set:
 
--   initial_supply
--   emission_rate
--   rewards_fund
--   development_fund
--   initial_distribution
--   airdrop_list: a `transaction_id` property, which links to a `custom_json` operation containing the list of Hive accounts and the number of tokens to send to each, and when to send them
-- claimdrop: a `transaction_id` property, which links to a `custom_json` operation containing the total amount of tokens available for the claimdrop and how much to allocate to each claiming account
--   effective operations
+- `initial_supply`
+
+- `emission_rate`
+
+- `rewards_fund`
+
+- `development_fund`
+
+- `initial_distribution`
+
+- `airdrop_list`: a `transaction_id` property, which links to a `custom_json` operation containing the list of Hive accounts and the number of tokens to send to each, and when to send them
+
+- `claimdrop`: a `transaction_id` property, which links to a `custom_json` operation containing the total amount of tokens available for the claimdrop and how much to allocate to each claiming account
+
+- `effective_operations`: the operations that will be considered valid for use in the HAT algorithms, for example a `custom_json` operation with a specific `id` and `json` payload
 
 **Note:**
 
@@ -112,15 +121,18 @@ To achieve this, JSON paths are used, with support for:
 
 For example, if an app uses a `custom_json` payload to broadcast the creation of a post similar to this one:  
 
+```
 {
     "title": "My first post",  
     "body": "This is my first post",  
     "tags": ["hive", "hat"],
     "permlink": "my-first-post"
 }
+```
 
 The corresponding HAF entry for this operations will be similar to this:
 
+```
 {
     "type": "custom_json_operation",
     "value": {
@@ -139,6 +151,7 @@ The corresponding HAF entry for this operations will be similar to this:
         ]
     }
 }
+```
 
 The JSON paths recorded will be:
 
@@ -148,6 +161,7 @@ The JSON paths recorded will be:
 
 This will be used to track unique content and reward it. An example database entry for this would be:
 
+```
 {
     "hat_token": "0000000000000000000000000000000000000000",
     "source": "custom_json_operation",
@@ -155,6 +169,7 @@ This will be used to track unique content and reward it. An example database ent
     "author": "user.cool",
     "permlink": "my-first-post"
 }
+```
 
 ### Social Distance Algorithm
 
@@ -168,11 +183,17 @@ This aims to mitigate the effects of unwarranted downvotes by users who are not 
 Variables:
 
 - `content` - the content being voted on
+
 - `user` - the user who created the content
+
 - `actor` - the user who is voting
+
 - `following` - whether or not the actor is following the user
+
 - `actor_interaction_score` - the number of interactions between the actor and the user
+
 - `actor_interaction_bias` - the bias towards the actor's interactions with the user (positive vs negative)
+
 - `actor_distance` - the resultant distance between the actor and the user
 
 Formula Description:
@@ -186,14 +207,15 @@ Formula Description:
     - weighted by the actor's interaction bias (important for accounting for actors who are distancing themselves from the user)
     - weighted by the actor's following status, where following weighs more than not following
 
-
 Illustrative Formula:
 
 *This is an illustrative formula, not the actual formula used in the implementation.*
 
-    actor_distance = (actor_interaction_score / total_interaction_score) * actor_interaction_bias * following_weight
+```
+actor_distance = (actor_interaction_score / total_interaction_score) * actor_interaction_bias * following_weight
 
-    following_weight = following ? 1.5 : 1
+following_weight = following ? 1.5 : 1
+```
 
 ### Reputation Algorithm
 
@@ -208,7 +230,9 @@ In effect, this aims to make the reputation score a reflection of how well a use
 Variables:
 
 - `actor_interaction_scores` - the number of interactions between the actor and the user, daily, fibonaccially weighted
+
 - `actor_distance` - the distance between the actor and the user
+
 - `user_reputation` - the resultant reputation of the user
 
 Formula Description:
@@ -223,7 +247,9 @@ Illustrative Formula:
 
 *This is an illustrative formula, not the actual formula used in the implementation.*
 
-    user_reputation = (actor_interaction_scores * actor_distance) * historical_reputation
+```
+user_reputation = (actor_interaction_scores * actor_distance) * historical_reputation
+```
 
 ### Token distribution Algorithm
 
@@ -236,12 +262,19 @@ In effect, a user's reputation will directly influence how much of the rewards p
 Variables:
 
 - `content` - the content being voted on
+
 - `user` - the user who created the content
+
 - `actor` - the user who is voting
+
 - `actor_reputation` - the reputation of the actor
+
 - `user_reputation` - the reputation of the user
+
 - `reward_impact` - the votes weight versus all votes cast that day
+
 - `rewards_pool` - the amount of tokens in the rewards pool
+
 - `revenue_share` - the percentage of the rewards pool to be distributed to the user
 
 Formula Description:
