@@ -1,7 +1,7 @@
   
 # Hive Attention Tokens (HAT)
 
-*This is a work in progress, please feel free to contribute to the discussion on [Hive](https://hive.blog/@freebeings)*
+*This is a work in progress, please feel free to contribute to the discussion on [Hive](https://hive.blog/@freebeings).*
 
 Hive Attention Tokens is a proposed layer 2 token protocol for the Hive blockchain, to allow dApps to create their own tokens and monetize their platforms using the Hive blockchain.
 
