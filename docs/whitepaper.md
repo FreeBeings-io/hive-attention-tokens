@@ -229,7 +229,7 @@ In effect, this aims to make the reputation score a reflection of how well a use
 
 Variables:
 
-- `actor_interaction_scores` - the number of interactions between the actor and the user, daily, fibonaccially weighted
+- `actor_interaction_scores` - the number of interactions between the actor and the user, daily, fibonacci weighted
 
 - `actor_distance` - the distance between the actor and the user
 
@@ -237,10 +237,10 @@ Variables:
 
 Formula Description:
 
-- calculate the total number of interactions between the actor and the user, daily, fibonaccially weighted
+- calculate the total number of interactions between the actor and the user, daily, fibonacci weighted
 - calculate the distance between the actor and the user
 - user_reputation is:
-    - the total number of interactions between the actor and the user, daily, fibonaccially weighted
+    - the total number of interactions between the actor and the user, daily, fibonacci weighted
     - weighted by the distance between the actor and the user
 
 Illustrative Formula:
